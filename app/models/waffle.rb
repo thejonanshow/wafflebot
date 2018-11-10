@@ -1,0 +1,2 @@
+class Waffle < ApplicationRecord
+end
