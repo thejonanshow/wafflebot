@@ -82,17 +82,7 @@ class Beeper
     RPi::GPIO.set_numbering :bcm
 
     @pin = pin || 16
-    RPi::GPIO.setup @pin, :as => :input
-
-    off
-  end
-
-  def off
-    RPi::GPIO.set_low @pin
-  end
-
-  def on
-    RPi::GPIO.set_high @pin
+    RPi::GPIO.setup @pin, as: :input, pull: :down
   end
 
   def wait
