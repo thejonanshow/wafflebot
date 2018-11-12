@@ -4,7 +4,7 @@ class WaffleChef
   attr_reader :beeper, :swing, :lift, :valve, :pump, :flip
 
   def initialize
-    @beeper = Beeper.new
+    @beeper = Beeper.new(16)
     @swing = Motor.new(6, 5, 0.0005)
     @lift = Motor.new(26, 19, 0.1) 
     @valve = Switch.new(14)
