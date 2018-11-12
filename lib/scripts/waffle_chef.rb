@@ -4,7 +4,6 @@ class WaffleChef
   attr_reader :beeper, :swing, :lift, :valve, :pump, :flip
 
   def initialize
-    @ready = false
     @beeper = Beeper.new
     @swing = Motor.new(6, 5, 0.0005)
     @lift = Motor.new(26, 19, 0.1) 
@@ -14,9 +13,6 @@ class WaffleChef
   end
 
   def cook
-    # @beeper.wait unless @ready
-    # @ready = true
-
     puts "Raising lid..."
     @lift.forward(10)
     sleep 15
@@ -59,10 +55,10 @@ class WaffleChef
 end
 
 class Switch
-  def initialize(pin = nil)
+  def initialize(pin)
     RPi::GPIO.set_numbering :bcm
 
-    @pin = pin || 26
+    @pin = pin
     RPi::GPIO.setup @pin, :as => :output
 
     off
@@ -78,12 +74,12 @@ class Switch
 end
 
 class Beeper
-  def initialize(pin = nil)
+  def initialize(pin)
     RPi::GPIO.set_numbering :bcm
 
     @beeped = false
 
-    @pin = pin || 16
+    @pin = pin
     RPi::GPIO.setup @pin, as: :input, pull: :down
   end
 
