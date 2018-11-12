@@ -42,14 +42,70 @@ class WaffleChef
   end
 end
 
-# wait for beep unless :ready (?) how do we know if we were already on? temp?
-# open wafflemaker - need to know if we're open already
-# swing arm in
-# dispense batter
-# swing arm out
-# close lid
-# rotate iron
-# wait for beep
-# rotate iron
-# open lid
-# play music! zelda chest opening!!!
+class Switch
+  def initialize(pin = nil)
+    RPi::GPIO.set_numbering :bcm
+
+    @pin = pin || 26
+    RPi::GPIO.setup @pin, :as => :output
+
+    off
+  end
+
+  def on
+    RPi::GPIO.set_high @pin
+  end
+
+  def off
+    RPi::GPIO.set_low @pin
+  end
+end
+
+class Beeper
+  def initialize(pin = nil)
+    RPi::GPIO.set_numbering :bcm
+
+    @pin = pin || 16
+    RPi::GPIO.setup @pin, :as => :input
+  end
+
+  def wait
+    while RPi::GPIO.low? @pin
+      sleep 0.5
+      puts "Waiting for beep..."
+    end
+  end
+end
+
+class Motor
+  def initialize(step_pin, reverse_pin, delay = 0.001)
+    RPi::GPIO.set_numbering :bcm
+
+    @step_pin = step_pin
+    @reverse_pin = reverse_pin
+    @delay = delay
+  end
+
+  def forward(steps = 800)
+    RPi::GPIO.setup @step_pin, :as => :output
+
+    steps.times do
+      RPi::GPIO.set_high @step_pin
+      puts "HIGH"
+      sleep @delay
+      RPi::GPIO.set_low @step_pin
+      puts "LOW"
+      sleep @delay
+    end
+  end
+
+  def backward(steps = 800)
+    RPi::GPIO.setup @step_pin, :as => :output
+    RPi::GPIO.setup @reverse_pin, :as => :output
+
+    RPi::GPIO.set_high @reverse_pin
+    forward(steps)
+  ensure
+    RPi::GPIO.set_low @reverse_pin
+  end
+end
