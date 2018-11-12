@@ -96,7 +96,7 @@ class Beeper
   end
 
   def wait
-    while !@beeped && RPi::GPIO.low? @pin
+    while (!@beeped) || (RPi::GPIO.low? @pin)
       sleep 0.5
       puts "Waiting for beep..."
     end
