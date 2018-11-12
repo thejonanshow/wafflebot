@@ -1,6 +1,8 @@
 require "rpi_gpio"
 
 class WaffleChef
+  attr_reader :beeper, :swing, :lift, :valve, :pump, :flip
+
   def initialize
     @ready = false
     @beeper = Beeper.new
@@ -17,7 +19,7 @@ class WaffleChef
 
     puts "Raising lid..."
     @lift.forward(10)
-    sleep 10
+    sleep 15
 
     puts "Deploying dispenser arm..."
     @swing.forward(1000)
@@ -39,7 +41,7 @@ class WaffleChef
 
     puts "Closing lid..."
     @lift.backward(10)
-    sleep 10
+    sleep 15
 
     puts "Flipping iron..."
     @flip.forward(1000)
@@ -50,6 +52,9 @@ class WaffleChef
 
     puts "Opening lid..."
     @lift.forward(10)
+    sleep 15
+
+    puts "Done!"
   end
 end
 
@@ -78,6 +83,16 @@ class Beeper
 
     @pin = pin || 16
     RPi::GPIO.setup @pin, :as => :input
+
+    off
+  end
+
+  def off
+    RPi::GPIO.set_low @pin
+  end
+
+  def on
+    RPi::GPIO.set_high @pin
   end
 
   def wait
