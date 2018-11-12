@@ -19,7 +19,7 @@ class WaffleChef
 
     puts "Deploying dispenser arm..."
     @swing.forward(5500)
-    sleep 10
+    sleep 7
 
     puts "Opening valve..."
     @valve.on
@@ -33,11 +33,11 @@ class WaffleChef
 
     puts "Retracting dispenser arm..."
     @swing.backward(5500)
-    sleep 10
+    sleep 7
 
     puts "Closing lid..."
     @lift.backward(200)
-    sleep 15
+    sleep 25
 
     puts "Flipping iron..."
     @flip.forward(42000)
@@ -48,7 +48,7 @@ class WaffleChef
 
     puts "Opening lid..."
     @lift.forward(500)
-    sleep 15
+    sleep 25
 
     puts "Done!"
   end
