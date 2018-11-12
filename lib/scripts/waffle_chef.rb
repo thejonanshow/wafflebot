@@ -100,7 +100,7 @@ class Beeper
 end
 
 class Motor
-  def initialize(step_pin, reverse_pin, delay = 0.001)
+  def initialize(step_pin, reverse_pin, delay)
     RPi::GPIO.set_numbering :bcm
 
     @step_pin = step_pin
@@ -108,7 +108,7 @@ class Motor
     @delay = delay
   end
 
-  def forward(steps = 800)
+  def forward(steps)
     RPi::GPIO.setup @step_pin, :as => :output
 
     steps.times do
@@ -119,7 +119,7 @@ class Motor
     end
   end
 
-  def backward(steps = 800)
+  def backward(steps)
     RPi::GPIO.setup @step_pin, :as => :output
     RPi::GPIO.setup @reverse_pin, :as => :output
 
