@@ -81,12 +81,22 @@ class Beeper
   def initialize(pin = nil)
     RPi::GPIO.set_numbering :bcm
 
+    @beeped = false
+
     @pin = pin || 16
     RPi::GPIO.setup @pin, as: :input, pull: :down
   end
 
+  def beep
+    @beeped = true
+  end
+
+  def unbeep
+    @beeped = false
+  end
+
   def wait
-    while RPi::GPIO.low? @pin
+    while !@beeped && RPi::GPIO.low? @pin
       sleep 0.5
       puts "Waiting for beep..."
     end
