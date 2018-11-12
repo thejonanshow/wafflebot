@@ -14,7 +14,7 @@ class WaffleChef
 
   def cook
     puts "Raising lid..."
-    @lift.forward(50)
+    @lift.forward(500)
     sleep 15
 
     puts "Deploying dispenser arm..."
@@ -36,7 +36,7 @@ class WaffleChef
     sleep 10
 
     puts "Closing lid..."
-    @lift.forward(50)
+    @lift.backward(200)
     sleep 15
 
     puts "Flipping iron..."
@@ -47,7 +47,7 @@ class WaffleChef
     sleep 10
 
     puts "Opening lid..."
-    @lift.forward(50)
+    @lift.forward(500)
     sleep 15
 
     puts "Done!"
