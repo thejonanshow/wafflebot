@@ -4,7 +4,7 @@ steps = ARGV[0].to_i
 steps ||= 1600
 direction = ARGV[1].to_i
 
-class Pump
+class Switch
   def initialize(pin = nil)
     RPi::GPIO.set_numbering :bcm
 
@@ -34,18 +34,16 @@ class Beeper
       sleep 0.5
       puts "Waiting for beep..."
     end
-
-    puts "BEEP"
   end
 end
 
 class Motor
-  def initialize(step_pin, reverse_pin, delay = nil)
+  def initialize(step_pin, reverse_pin, delay = 0.001)
     RPi::GPIO.set_numbering :bcm
 
     @step_pin = step_pin
     @reverse_pin = reverse_pin
-    @delay = delay || 0.001
+    @delay = delay
   end
 
   def forward(steps = 800)
