@@ -12,32 +12,43 @@ class WaffleChef
   end
 
   def cook
-    @beeper.wait unless @ready
-    @ready = true
+    # @beeper.wait unless @ready
+    # @ready = true
 
+    puts "Raising lid..."
     @lift.forward(10)
     sleep 10
 
+    puts "Deploying dispenser arm..."
     @swing.forward(1000)
     sleep 10
 
+    puts "Opening valve..."
     @valve.on
+    puts "Pumping..."
     @pump.on
     sleep 3
+    puts "Closing valve..."
     @valve.off
+    puts "Stopping pump..."
     @pump.off
 
+    puts "Retracting dispenser arm..."
     @swing.backward(1000)
     sleep 10
 
+    puts "Closing lid..."
     @lift.backward(10)
     sleep 10
 
+    puts "Flipping iron..."
     @flip.forward(1000)
     @beeper.wait
+    puts "Flipping iron..."
     @flip.backward(1000)
     sleep 10
 
+    puts "Opening lid..."
     @lift.forward(10)
   end
 end
@@ -91,10 +102,8 @@ class Motor
 
     steps.times do
       RPi::GPIO.set_high @step_pin
-      puts "HIGH"
       sleep @delay
       RPi::GPIO.set_low @step_pin
-      puts "LOW"
       sleep @delay
     end
   end
