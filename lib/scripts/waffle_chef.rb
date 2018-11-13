@@ -6,15 +6,19 @@ class WaffleChef
   def initialize
     @beeper = Beeper.new(16)
     @swing = Motor.new(6, 5, 0.0005)
-    @lift = Motor.new(26, 19, 0.0005) 
+    @lift = Motor.new(19, 13, 0.0005)
     @valve = Switch.new(14)
     @pump = Switch.new(15)
     @flip = Motor.new(21, 20, 0.00005)
+
+    RPi::GPIO.setup 26, as: :output
+    RPi::GPIO.set_high 26
   end
 
   def cook
+
     puts "Raising lid..."
-    @lift.forward(500)
+    @lift.forward(800)
     sleep 15
 
     puts "Deploying dispenser arm..."
@@ -36,18 +40,18 @@ class WaffleChef
     sleep 7
 
     puts "Closing lid..."
-    @lift.backward(200)
+    @lift.forward(800)
     sleep 25
 
     puts "Flipping iron..."
     @flip.forward(42000)
-    @beeper.wait
+    sleep 10
     puts "Flipping iron..."
     @flip.backward(42000)
     sleep 10
 
     puts "Opening lid..."
-    @lift.forward(500)
+    @lift.forward(800)
     sleep 25
 
     puts "Done!"
