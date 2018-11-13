@@ -1,9 +1,5 @@
 class WafflesController < ApplicationController
   def new
-    # dispense
-    # lower lid
-    # spin
-    # reverse spin
-    # lift lid
+    $kafka.deliver_message("cook", topic: "pendoreille-6647.wafflebot")
   end
 end
