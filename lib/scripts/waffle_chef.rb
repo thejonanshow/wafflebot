@@ -12,7 +12,7 @@ class WaffleChef
     @flip = Motor.new(21, 20, 0.00005)
 
     RPi::GPIO.setup 26, as: :output
-    RPi::GPIO.set_high 26
+    RPi::GPIO.set_low 26
   end
 
   def cook
