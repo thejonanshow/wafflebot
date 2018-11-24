@@ -8,12 +8,8 @@ $kafka = Kafka.new(
 )
 
 Thread.new do
-  count = 0
-  colors = %w(blue green red yellow teal gray black)
-
-  loop do
-    sleep 2
-    count += 1;
-    ActionCable.server.broadcast("waffles", message: count, color: colors.sample)
+  $kafka.each_message(topic: "pendoreille-6647.wafflebotui") do |message|
+    parsed = JSON.parse(message.value)
+    ActionCable.server.broadcast("waffles", message: parsed["message"], color: parsed["color"])
   end
 end

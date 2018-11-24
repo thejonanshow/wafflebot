@@ -1,5 +1,6 @@
 class WafflesController < ApplicationController
   def new
-    $kafka.deliver_message("cook", topic: "pendoreille-6647.wafflebot")
+    data = { message: "start" }.to_json
+    $kafka.deliver_message(data, topic: "pendoreille-6647.wafflebot")
   end
 end

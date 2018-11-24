@@ -9,6 +9,10 @@ App.waffles = App.cable.subscriptions.create("WafflesChannel", {
   },
 
   received: function(data) {
+    if (data["message"] == "go_home") {
+      window.location.replace("http://localhost:3000")
+    }
+
     console.log("Received...")
     progress = document.getElementsByClassName('waffle-progress')
 
